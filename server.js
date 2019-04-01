@@ -58,7 +58,7 @@ app.delete("/notes/:id", function(req, res) {
     });
 });
 
-db.Article.drop()
+db.Article.drop({})
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
