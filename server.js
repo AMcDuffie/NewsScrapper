@@ -19,6 +19,7 @@ var app = express();
 var PORT = process.env.PORT || 8080;
 
 
+
 // Set Handlebars as the default templating engine.
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -34,14 +35,13 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-
-
-
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/Articles';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/Article';
 
 // // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/Articles", { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI);
+
+
 
 // Routes
 app.delete("/notes/:id", function(req, res) {
@@ -58,10 +58,9 @@ app.delete("/notes/:id", function(req, res) {
     });
 });
 
-db.Article.drop({})
-
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
+
   // First, we grab the body of the html with axios
   axios.get("https://www.atlasnetwork.org/news?gclid=EAIaIQobChMI8O-8y-ig4QIVwmSGCh04pw2JEAAYASAAEgIvx_D_BwE").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector

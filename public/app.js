@@ -9,11 +9,11 @@ $.getJSON("/articles", function(data) {
 
 $(document).ready(function() {
   $('#scraper').click(function(event) {
-   
+    
     event.preventDefault()
 
     $.get("/scrape").then(function() {
-      window.alert('scraped')
+      location.reload()
     })
   })
 })
